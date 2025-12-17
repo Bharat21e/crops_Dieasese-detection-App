@@ -1,0 +1,153 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* NAVBAR */
+.navbar {
+  /* background-color: #237c23; */
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-container2 {
+  display: contents;
+  flex-direction: row;
+  margin-right: 60rem;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-link {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.nav-link:hover {
+  color: #1abc9c;
+}
+@media (max-width: 768px) {
+ 
+  
+
+  .navbar-container2 {
+    justify-content: center;
+    display: contents;
+    align-items: center;
+    flex-direction: row;
+    padding: 5px 5px;
+
+  }
+
+  .nav-links {
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .nav-link {
+    font-size: 1rem;
+  }
+
+  
+}
+
+/* HERO SECTION */
+.hero {
+  padding: 4rem 2rem;
+  min-height: 92.2vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-image: url("hello.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: black; /* desktop */
+  text-align: left;
+}
+
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  text-align: left;
+}
+
+.hero-description {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  color: black; /* desktop */
+}
+
+.get-started-btn {
+  background-color: #237c23;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.get-started-btn:hover {
+  background-color: chartreuse;
+}
+
+/* -------------------------------------------- */
+/* MOBILE + TABLET VIEW (window reduced) */
+/* -------------------------------------------- */
+@media (max-width: 768px) {
+
+  .hero{
+        flex-direction: column;
+        padding: 1rem;
+        justify-content: center;
+  }
+  .hero-title {
+    /* font-size: 2rem;        reduce size */
+    color: brown;           
+    text-align: left;       /* stay left */
+  }
+
+  .hero-description {
+    /* font-size: 1rem;        reduce size */
+    color: brown;           
+  }
+
+  
+}
+
+/* Very small screens */
+@media (max-width: 400px) {
+
+
+  .hero{
+   flex-direction: column;
+        padding: 1rem;
+        justify-content: center;
+  }
+
+  
+
+ 
+
+  
+}
