@@ -192,7 +192,7 @@ disease_data = {
 
 # Load the model
 try:
-    model = tf.keras.models.load_model('wheatleaf_disease\crop_leaf_model.h5')
+    model = tf.keras.models.load_model('wheatleaf_disease/crop_leaf_model.h5')
 except Exception as e:
     print(json.dumps({"error": f"Failed to load model: {str(e)}"}))
     sys.exit(1)
