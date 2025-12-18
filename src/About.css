@@ -1,0 +1,141 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  animation: fadeInBody 1s ease-in;
+}
+
+
+@keyframes fadeInBody {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+.navbarA {
+  background-color: #237c23;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  animation: fadeInBody 1s ease-in;
+}
+
+.navbar-containerA {
+  display: contents;
+  margin-right: 60rem;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-link {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #1abc9c;
+}
+
+
+.hero1 {
+  display: flex;
+  row-gap: 10px;
+  animation: fadeInBody 1s ease-in;
+}
+
+@media screen and (max-width: 1007px) {
+  .hero1 {
+    display: block;
+  }
+}
+
+
+.image-box {
+  width: 70%;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(200, 196, 196, 0.05);
+  margin-left: 20px;
+  margin-top: 100px;
+  animation: slideInLeft 1s ease forwards;
+}
+
+/* .about-image img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 10px 10px 12px whitesmoke;
+  background-color: white;
+} */
+
+
+.details-box {
+  width: 70%;
+  align-items: center;
+  text-align: center;
+  animation: slideInRight 1s ease forwards;
+}
+
+
+@media (max-width: 768px) {
+ 
+  
+
+  .navbar-containerA {
+       justify-content: center;
+    display: contents;
+    align-items: center;
+    flex-direction: row;
+    padding: 20px 20px;
+
+  }
+
+  .nav-links {
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .nav-link {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+
+  .image,
+  .details {
+    max-width: 100%;
+    padding: 1rem;
+  }
+}

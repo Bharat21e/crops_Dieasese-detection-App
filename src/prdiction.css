@@ -1,0 +1,206 @@
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar4 {
+  width: 100%;
+  background-color: #237c23;
+  padding: 12px 20px;
+}
+
+.navbar-container4 {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Navigation Links */
+.linkk ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-linkk {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active1 {
+  color: #18bc9c;
+}
+
+/* Title */
+.h1 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+.container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+#heading {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* =========================
+   CAMERA / UPLOAD CONTROLS
+========================= */
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.camera-label,
+.uploade-icon {
+  font-size: 2.2rem;
+  cursor: pointer;
+  color: #2c3e50;
+  transition: color 0.3s ease;
+}
+
+.camera-label:hover,
+.uploade-icon:hover {
+  color: #18bc9c;
+}
+
+/* =========================
+   VIDEO
+========================= */
+.video-container video {
+  max-width: 45%;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+  margin-bottom: 15px;
+}
+
+/* =========================
+   PREDICTION BOX
+========================= */
+.prediction {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #ecf0f1;
+  border-radius: 12px;
+}
+
+.prediction img {
+  width: 200px;
+  height: 200px;
+  border-radius: 20px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.Loader {
+  font-size: 1.05rem;
+  margin: 8px 0;
+  color: #34495e;
+}
+
+/* =========================
+   LOADER
+========================= */
+.loader h4 {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+.loding::after {
+  content: '';
+  animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+  0% { content: ''; }
+  25% { content: '.'; }
+  50% { content: '..'; }
+  75% { content: '...'; }
+  100% { content: '....'; }
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+@media (max-width: 768px) {
+
+  .navbar-container4 {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .link ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .h1 {
+    font-size: 1.2rem;
+  }
+
+  #heading {
+    font-size: 1.6rem;
+  }
+
+  .controls {
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .video-container video {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .nav-link {
+    font-size: 0.95rem;
+  }
+
+  .camera-label,
+  .uploade-icon {
+    font-size: 1.8rem;
+  }
+
+  .prediction img {
+    width: 160px;
+    height: 160px;
+  }
+}

@@ -1,0 +1,212 @@
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* =========================
+   BODY
+========================= */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5faf5;
+  color: #2c3e50;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+  background-color: #2e7d32;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-brand h1 {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+
+/* Nav Links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  padding-bottom: 3px;
+  transition: border-bottom 0.3s ease, color 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  border-bottom: 2px solid #aed581;
+  color: #e8f5e9;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+.main {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+/* =========================
+   HEADINGS
+========================= */
+h1 {
+  color: green;
+  margin-bottom: 20px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+button {
+  margin-top: 30px;
+  padding: 12px 24px;
+  background-color: green;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #66bb6a;
+}
+
+/* =========================
+   CAMERA FEED
+========================= */
+.camera-feed {
+  margin: 30px auto;
+  width: 100%;
+  max-width: 400px;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+}
+
+/* =========================
+   CROP INFO CARD
+========================= */
+.crop-info-card {
+  display: flex;
+  gap: 24px;
+  text-align: left;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.info-list {
+  flex: 1;
+  min-width: 280px;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.info-list li {
+  list-style: none;
+  margin-bottom: 8px;
+}
+
+/* =========================
+   INFORMATION SECTION
+========================= */
+.informstion {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 25px;
+  background-color: #f5f7fa;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.informstion h1 {
+  font-size: 2.2rem;
+  color: #2c3e50;
+  margin-bottom: 25px;
+}
+
+.informstion h3 {
+  font-size: 1.3rem;
+  color: #34495e;
+  margin-bottom: 15px;
+}
+
+.informstion img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  margin: 15px 0 35px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+@media (max-width: 768px) {
+
+  .navbar {
+    flex-direction: row;
+    gap: 4px;
+    text-align: center;
+  }
+
+  .nav-links {
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .nav-brand h1 {
+    font-size: 1.4rem;
+  }
+
+  .main {
+    padding: 20px 15px;
+  }
+
+  .crop-info-card {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .nav-link {
+    font-size: 0.95rem;
+  }
+
+  .informstion h1 {
+    font-size: 1.7rem;
+  }
+
+  .informstion h3 {
+    font-size: 1.1rem;
+  }
+
+  button {
+    width: 100%;
+  }
+}

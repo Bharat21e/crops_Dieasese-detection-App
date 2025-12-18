@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Wheat___Healthy",
+    "cause": "No disease present.",
+    "cure": "Maintain proper watering and nutrient levels."
+  },
+  {
+    "name": "Wheat___Brown_Rust",
+    "cause": "Fungus Puccinia triticina, favored by cool, moist conditions.",
+    "cure": "Use resistant wheat varieties and apply fungicides."
+  },
+  {
+    "name": "Wheat___Yellow_Rust",
+    "cause": "Fungus Puccinia striiformis, common in cool weather.",
+    "cure": "Use resistant varieties, remove infected debris, and spray fungicides."
+  },
+  {
+    "name": "Wheat___Other_Disease",
+    "cause": "Unidentified disease symptoms.",
+    "cure": "Consult agricultural expert and follow general crop hygiene practices."
+  }
+]
