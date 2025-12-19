@@ -15,22 +15,22 @@ body {
 
 @keyframes slideInLeft {
   from {
-    transform: translateX(-50px);
+    transform: translateY(-50px);
     opacity: 0;
   }
   to {
-    transform: translateX(0);
+    transform: translateY(0);
     opacity: 1;
   }
 }
 
 @keyframes slideInRight {
   from {
-    transform: translateX(50px);
+    transform: translateY(-50px);
     opacity: 0;
   }
   to {
-    transform: translateX(0);
+    transform: translateY(0);
     opacity: 1;
   }
 }
@@ -78,6 +78,7 @@ body {
 @media screen and (max-width: 1007px) {
   .hero1 {
     display: block;
+    margin-left: 50px;
   }
 }
 
@@ -106,6 +107,7 @@ body {
   align-items: center;
   text-align: center;
   animation: slideInRight 1s ease forwards;
+  margin-top:300px;
 }
 
 
@@ -138,4 +140,10 @@ body {
     max-width: 100%;
     padding: 1rem;
   }
+
+
+  .details-box {
+ 
+  margin-top:100px;
+}
 }
