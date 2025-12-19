@@ -93,6 +93,8 @@ function Prediction() {
           setPrediction(data.prediction?.trim() || '');
           setHealthyPercentage(data.healthy || '');
           setAffectedPercentage(data.affected || '');
+          setcouseinfo(data.cause || '');
+          setcureinfo(data.cure || '');
         } catch (error) {
           console.error('Error sending captured image:', error);
         } finally {
