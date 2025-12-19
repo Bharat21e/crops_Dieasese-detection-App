@@ -207,16 +207,7 @@ function Prediction() {
                 {healthyPercentage && <h5 className="Loader">Healthy Percentage: {healthyPercentage}%</h5>}
                 {affectedPercentage && <h5 className="Loader">Affected Percentage: {affectedPercentage}%</h5>}
 
-                {/* {diseaseInfo[trimmedPrediction] && (
-                  <>
-                    <h5 className="Loader">
-                      Cause: {diseaseInfo[trimmedPrediction].cause}
-                    </h5>
-                    <h5 className="Loader">
-                      Cure: {diseaseInfo[trimmedPrediction].cure}
-                    </h5>
-                  </>
-                )} */}
+               
                 {couseinfo && <h5 className="Loader">Cause: {couseinfo}</h5>}
                 {cureinfo && <h5 className="Loader">Cure: {cureinfo}</h5>}
               </>
