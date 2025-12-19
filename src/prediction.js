@@ -197,7 +197,7 @@ function Prediction() {
 
             {loading && (
               <div className="loader">
-                <h4>Predicting <span className="loding">...............</span></h4>
+                <h4>Predicting <span className="loding">..........</span></h4>
               </div>
             )}
 
