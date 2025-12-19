@@ -31,8 +31,8 @@ function Prediction() {
   const [prediction, setPrediction] = useState('');
   const [healthyPercentage, setHealthyPercentage] = useState('');
   const [affectedPercentage, setAffectedPercentage] = useState('');
-  const [couseinfo ,setcouseinfo]=useState('');
-  const [cureinfo ,setcureinfo]=useState('');
+  const [couseinfo ,setcouseinfo]=useState('')=useState('');
+  const [cureinfo ,setcureinfo]=useState('')=useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
 
