@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Homapage.css';
-import './i18n';
+//import './i18n';
 const Homepage = () => {
   return (
     <div className="aboutpage">
