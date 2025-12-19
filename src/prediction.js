@@ -31,6 +31,8 @@ function Prediction() {
   const [prediction, setPrediction] = useState('');
   const [healthyPercentage, setHealthyPercentage] = useState('');
   const [affectedPercentage, setAffectedPercentage] = useState('');
+  const [couseinfo ,setcouseinfo]=useState('');
+  const [cureinfo ,setcureinfo]=useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -199,7 +201,7 @@ function Prediction() {
                 {healthyPercentage && <h5 className="Loader">Healthy Percentage: {healthyPercentage}%</h5>}
                 {affectedPercentage && <h5 className="Loader">Affected Percentage: {affectedPercentage}%</h5>}
 
-                {diseaseInfo[trimmedPrediction] && (
+                {/* {diseaseInfo[trimmedPrediction] && (
                   <>
                     <h5 className="Loader">
                       Cause: {diseaseInfo[trimmedPrediction].cause}
@@ -208,7 +210,9 @@ function Prediction() {
                       Cure: {diseaseInfo[trimmedPrediction].cure}
                     </h5>
                   </>
-                )}
+                )} */}
+                {couseinfo && <h5 className="Loader">Cause: {couseinfo}</h5>}
+                {cureinfo && <h5 className="Loader">Cure: {cureinfo}</h5>}
               </>
             )}
           </div>
