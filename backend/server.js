@@ -101,7 +101,9 @@ app.post('/upload', upload.single('image'), async (req, res) => {
         res.json({
           prediction: result.prediction,
           healthy: result.healthy,
-          affected: result.affected
+          affected: result.affected,
+          cause: result.cause,
+          cure: result.cure
         });
 
       } catch (err) {
