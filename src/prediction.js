@@ -76,28 +76,26 @@ function Prediction() {
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     canvas.toBlob(async (blob) => {
-      if (!blob) return;
+      if (blob) {
+        setImageUrl(URL.createObjectURL(blob));
+        const formData = new FormData();
+        formData.append('image', blob, 'capture.jpg');
+        setLoading(true);
 
-      setImageUrl(URL.createObjectURL(blob));
-      setLoading(true);
-
-      const formData = new FormData();
-      formData.append('image', blob, 'capture.jpg');
-
-      try {
-        const response = await fetch(`${BACKEND_URL}/upload`, {
-          method: 'POST',
-          body: formData
-        });
-        const data = await response.json();
-
-        setPrediction(data.prediction?.trim() || '');
-        setHealthyPercentage(data.healthy || '');
-        setAffectedPercentage(data.affected || '');
-      } catch (error) {
-        console.error('Error sending captured image:', error);
-      } finally {
-        setLoading(false);
+        try {
+          const response = await fetch(`${BACKEND_URL}/upload`, {
+            method: 'POST',
+            body: formData
+          });
+          const data = await response.json();
+          setPrediction(data.prediction?.trim() || '');
+          setHealthyPercentage(data.healthy || '');
+          setAffectedPercentage(data.affected || '');
+        } catch (error) {
+          console.error('Error sending captured image:', error);
+        } finally {
+          setLoading(false);
+        }
       }
     }, 'image/jpeg');
   };
@@ -119,7 +117,6 @@ function Prediction() {
         body: formData
       });
       const data = await response.json();
-
       setPrediction(data.prediction?.trim() || '');
       setHealthyPercentage(data.healthy || '');
       setAffectedPercentage(data.affected || '');
@@ -152,12 +149,14 @@ function Prediction() {
       <nav className="navbar4">
         <div className="navbar-container4">
           <h1 className='h1'>Crops Disease Detection</h1>
-          <ul className="nav-links">
-            <li><Link to="/homepage">Home</Link></li>
-            <li><Link to="/prediction">Disease Detection</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/cropsinfromation">Guide</Link></li>
-          </ul>
+          <div className='linkk'>
+            <ul className="nav-links">
+              <li><Link to="/homepage" className="nav-link">Home</Link></li>
+              <li><Link to="/prediction" className="nav-link">Disease Detection</Link></li>
+              <li><Link to="/about" className="nav-link">About</Link></li>
+              <li><Link to="/cropsinfromation" className="nav-link active1">Guide</Link></li>
+            </ul>
+          </div>
         </div>
       </nav>
 
@@ -169,27 +168,13 @@ function Prediction() {
         </div>
 
         <div className="controls">
-          <button
-            onClick={() => { resetState(); startCamera(); }}
-            disabled={streaming}
-            id="cameraBtn"
-            style={{ display: 'none' }}
-          >
-            📷
+          <button onClick={() => { resetState(); startCamera(); }} disabled={streaming} id="cameraBtn" style={{ display: 'none' }}>
+            <i className="fa-solid fa-camera"></i>
           </button>
+          <label htmlFor="cameraBtn" className="camera-label"><i className="fa-solid fa-camera"></i></label>
 
-          <label htmlFor="cameraBtn" className="camera-label">📷</label>
-
-          <input
-            type="file"
-            accept="image/*"
-            id="fileInput"
-            onClick={resetState}
-            onChange={handleImageUpload}
-            style={{ display: 'none' }}
-          />
-
-          <label htmlFor="fileInput" className="uploade-icon">🖼️</label>
+          <input type="file" accept="image/*" id="fileInput" onClick={resetState} onChange={handleImageUpload} style={{ display: 'none' }} />
+          <label htmlFor="fileInput" className="uploade-icon"><i className="fa-solid fa-image"></i></label>
         </div>
 
         {(imageUrl || loading || prediction) && (
@@ -197,22 +182,22 @@ function Prediction() {
             {imageUrl && (
               <img
                 src={imageUrl}
-                alt="Uploaded"
-                style={{ width: '200px', height: '200px', borderRadius: '20px' }}
+                alt="Uploaded or Captured"
+                style={{ width: '200px', height: '200px', marginBottom: '10px', borderRadius: '20px' }}
               />
             )}
 
             {loading && (
               <div className="loader">
-                <h4>Predicting <span className="loding">...........</span></h4>
+                <h4>Predicting <span className="loding">...............</span></h4>
               </div>
             )}
 
             {!loading && prediction && (
               <>
                 <h5 className="Loader">Prediction: {trimmedPrediction}</h5>
-                {healthyPercentage && <h5 className="Loader">Healthy: {healthyPercentage}%</h5>}
-                {affectedPercentage && <h5 className="Loader">Affected: {affectedPercentage}%</h5>}
+                {healthyPercentage && <h5 className="Loader">Healthy Percentage: {healthyPercentage}%</h5>}
+                {affectedPercentage && <h5 className="Loader">Affected Percentage: {affectedPercentage}%</h5>}
 
                 {diseaseInfo[trimmedPrediction] && (
                   <>
