@@ -14,7 +14,7 @@ app.use(cors({
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-const PYTHON_API_URL = 'http://127.0.0.1:8000/predict';
+const PYTHON_API_URL = 'https://crops-dieasese-detection-app-5.onrender.com/predict';
 
 app.post('/upload', upload.single('image'), async (req, res) => {
   if (!req.file) {
