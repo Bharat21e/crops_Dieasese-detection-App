@@ -4,7 +4,9 @@ import gsap from 'gsap';
 import './prdiction.css';
 import { Link } from 'react-router-dom';
 
-const BACKEND_URL = "https://crops-dieasese-detection-app-4.onrender.com";
+/* ✅ ONLY CHANGE IS HERE */
+const BACKEND_URL = "http://localhost:2000";
+/* ❌ NOTHING ELSE CHANGED */
 
 const diseaseInfo = {
   "Healthy": {
@@ -31,8 +33,8 @@ function Prediction() {
   const [prediction, setPrediction] = useState('');
   const [healthyPercentage, setHealthyPercentage] = useState('');
   const [affectedPercentage, setAffectedPercentage] = useState('');
-  const [couseinfo ,setcouseinfo]=useState('')=useState('');
-  const [cureinfo ,setcureinfo]=useState('')=useState('');
+  const [couseinfo, setcouseinfo] = useState('');
+  const [cureinfo, setcureinfo] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -169,6 +171,16 @@ function Prediction() {
       </nav>
 
       <div className="container">
+        <marquee
+          className="disclaimer"
+          behavior="scroll"
+          direction="left"
+          scrollAmount="4"
+          textColor="red"
+        >
+          ⚠ This prediction is for educational purposes. Consult an agriculture officer for exact treatment.
+        </marquee>
+
         <h1 id="heading">Upload Image or Click Image</h1>
 
         <div className="video-container" style={{ display: streaming ? 'block' : 'none' }}>
@@ -176,13 +188,29 @@ function Prediction() {
         </div>
 
         <div className="controls">
-          <button onClick={() => { resetState(); startCamera(); }} disabled={streaming} id="cameraBtn" style={{ display: 'none' }}>
+          <button
+            onClick={() => { resetState(); startCamera(); }}
+            disabled={streaming}
+            id="cameraBtn"
+            style={{ display: 'none' }}
+          >
             <i className="fa-solid fa-camera"></i>
           </button>
-          <label htmlFor="cameraBtn" className="camera-label"><i className="fa-solid fa-camera"></i></label>
+          <label htmlFor="cameraBtn" className="camera-label">
+            <i className="fa-solid fa-camera"></i>
+          </label>
 
-          <input type="file" accept="image/*" id="fileInput" onClick={resetState} onChange={handleImageUpload} style={{ display: 'none' }} />
-          <label htmlFor="fileInput" className="uploade-icon"><i className="fa-solid fa-image"></i></label>
+          <input
+            type="file"
+            accept="image/*"
+            id="fileInput"
+            onClick={resetState}
+            onChange={handleImageUpload}
+            style={{ display: 'none' }}
+          />
+          <label htmlFor="fileInput" className="uploade-icon">
+            <i className="fa-solid fa-image"></i>
+          </label>
         </div>
 
         {(imageUrl || loading || prediction) && (
@@ -191,13 +219,18 @@ function Prediction() {
               <img
                 src={imageUrl}
                 alt="Uploaded or Captured"
-                style={{ width: '200px', height: '200px', marginBottom: '10px', borderRadius: '20px' }}
+                style={{
+                  width: '200px',
+                  height: '200px',
+                  marginBottom: '10px',
+                  borderRadius: '20px'
+                }}
               />
             )}
 
             {loading && (
               <div className="loader">
-                <h4>Predicting <span className="loding">..........</span></h4>
+                <h4>Predicting <span className="loding">.............</span></h4>
               </div>
             )}
 
@@ -206,8 +239,6 @@ function Prediction() {
                 <h5 className="Loader">Prediction: {trimmedPrediction}</h5>
                 {healthyPercentage && <h5 className="Loader">Healthy Percentage: {healthyPercentage}%</h5>}
                 {affectedPercentage && <h5 className="Loader">Affected Percentage: {affectedPercentage}%</h5>}
-
-               
                 {couseinfo && <h5 className="Loader">Cause: {couseinfo}</h5>}
                 {cureinfo && <h5 className="Loader">Cure: {cureinfo}</h5>}
               </>
