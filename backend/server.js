@@ -1,11 +1,10 @@
 const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
-const fetch = require('node-fetch');
 const FormData = require('form-data');
 
 const app = express();
-const PORT = 2000;
+const PORT = process.env.PORT || 10000;
 
 app.use(cors({
   origin: '*',
@@ -14,7 +13,8 @@ app.use(cors({
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-const PYTHON_API_URL = 'https://crops-dieasese-detection-app-5.onrender.com/predict';
+const PYTHON_API_URL =
+  'https://crops-dieasese-detection-app-5.onrender.com/predict';
 
 app.post('/upload', upload.single('image'), async (req, res) => {
   if (!req.file) {
@@ -34,7 +34,9 @@ app.post('/upload', upload.single('image'), async (req, res) => {
       headers: formData.getHeaders()
     });
 
-    if (!response.ok) throw new Error('Python API error');
+    if (!response.ok) {
+      throw new Error('Python API error');
+    }
 
     const result = await response.json();
     res.json(result);
@@ -50,5 +52,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`✅ Node server running on port http://localhost:${PORT}`);
+  console.log(`✅ Node server running on port ${PORT}`);
 });
