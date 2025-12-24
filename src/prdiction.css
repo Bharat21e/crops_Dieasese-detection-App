@@ -204,3 +204,9 @@ body {
     height: 160px;
   }
 }
+
+
+.disclaimer {
+  color: red;
+  font-weight: bold;
+}
