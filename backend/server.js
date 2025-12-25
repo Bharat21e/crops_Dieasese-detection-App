@@ -6,10 +6,14 @@ const FormData = require('form-data');
 const app = express();
 const PORT = 2000;
 
+const cors = require('cors');
+
 app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST']
+    origin: 'https://crops-dieasese-detection-app.vercel.app', // frontend URL
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type']
 }));
+
 
 const upload = multer({ storage: multer.memoryStorage() });
 
