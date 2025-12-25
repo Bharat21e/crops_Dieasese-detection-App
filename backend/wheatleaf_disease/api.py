@@ -6,6 +6,11 @@ import io
 
 app = FastAPI()
 
+
+@app.get("/")
+def root():
+    return {"status": "Crop Disease Detection API is running"}
+
 class_names = [
     "Apple___Apple_scab",
     "Apple___Black_rot",
@@ -239,7 +244,8 @@ sease_data = {
 }
 
 
-model = tf.keras.models.load_model("crop_leaf_model.h5")
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "crop_leaf_model.h5")
+model = tf.keras.models.load_model(MODEL_PATH)
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
@@ -261,6 +267,8 @@ async def predict(file: UploadFile = File(...)):
             "cause": "Disease information not available.",
             "cure": "Check nearby agriculture doctor."
         })
+        
+        
 
         return {
             "prediction": label,
