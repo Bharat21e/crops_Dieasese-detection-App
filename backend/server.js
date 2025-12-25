@@ -6,7 +6,7 @@ const FormData = require('form-data');
 const app = express();
 const PORT = 2000;
 
-const cors = require('cors');
+//const cors = require('cors');
 
 app.use(cors({
     origin: 'https://crops-dieasese-detection-app.vercel.app', // frontend URL
