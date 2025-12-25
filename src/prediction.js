@@ -5,7 +5,7 @@ import './prdiction.css';
 import { Link } from 'react-router-dom';
 
 /* ✅ ONLY CHANGE IS HERE */
-const BACKEND_URL = "https://crops-dieasese-detection-app-3.onrender.com";
+const BACKEND_URL = " https://crops-dieasese-detection-app-2.onrender.com";
 /* ❌ NOTHING ELSE CHANGED */
 
 const diseaseInfo = {
