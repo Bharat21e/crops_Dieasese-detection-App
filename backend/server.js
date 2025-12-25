@@ -6,6 +6,9 @@ const FormData = require('form-data');
 const app = express();
 const PORT = process.env.PORT || 2000;
 
+const fetch = (...args) =>
+  import('node-fetch').then(({ default: fetch }) => fetch(...args));
+
 /* ✅ CORS */
 app.use(cors({
   origin: 'https://crops-dieasese-detection-app.vercel.app',
