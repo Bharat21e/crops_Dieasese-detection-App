@@ -8,24 +8,24 @@ import { Link } from 'react-router-dom';
 const BACKEND_URL = "https://crops-dieasese-detection-app-4.onrender.com";
 /* ❌ NOTHING ELSE CHANGED */
 
-const diseaseInfo = {
-  "Healthy": {
-    cause: "No disease present.",
-    cure: "Maintain proper watering and nutrient levels."
-  },
-  "Brown Rust": {
-    cause: "Fungus Puccinia triticina, favored by cool, moist conditions.",
-    cure: "Use resistant wheat varieties and apply fungicides."
-  },
-  "Yellow Rust": {
-    cause: "Fungus Puccinia striiformis, common in cool weather.",
-    cure: "Use resistant varieties, remove infected debris, and spray fungicides."
-  },
-  "Disease": {
-    cause: "Unidentified disease symptoms.",
-    cure: "Consult agricultural expert and follow general crop hygiene practices."
-  }
-};
+// const diseaseInfo = {
+//   "Healthy": {
+//     cause: "No disease present.",
+//     cure: "Maintain proper watering and nutrient levels."
+//   },
+//   "Brown Rust": {
+//     cause: "Fungus Puccinia triticina, favored by cool, moist conditions.",
+//     cure: "Use resistant wheat varieties and apply fungicides."
+//   },
+//   "Yellow Rust": {
+//     cause: "Fungus Puccinia striiformis, common in cool weather.",
+//     cure: "Use resistant varieties, remove infected debris, and spray fungicides."
+//   },
+//   "Disease": {
+//     cause: "Unidentified disease symptoms.",
+//     cure: "Consult agricultural expert and follow general crop hygiene practices."
+//   }
+// };
 
 function Prediction() {
   const videoRef = useRef(null);
@@ -171,7 +171,7 @@ function Prediction() {
       </nav>
 
       <div className="container">
-        <marquee
+        {/* <marquee
           className="disclaimer"
           behavior="scroll"
           direction="left"
@@ -179,7 +179,7 @@ function Prediction() {
           textColor="red"
         >
           ⚠ This prediction is for educational purposes. Consult an agriculture officer for exact treatment.
-        </marquee>
+        </marquee> */}
 
         <h1 id="heading">Upload Image or Click Image</h1>
 
