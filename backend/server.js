@@ -1,90 +1,212 @@
 const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
-const { fetch } = require('undici');
-const FormData = require('form-data');
 
 const app = express();
+
 const PORT = process.env.PORT || 2000;
 
-/* CORS */
+
+/* =========================
+   CORS
+========================= */
+
 app.use(cors({
   origin: 'https://crops-dieasese-detection-app.vercel.app',
   methods: ['GET', 'POST']
 }));
 
-/* Multer */
+
+/* =========================
+   MULTER
+========================= */
+
 const upload = multer({
   storage: multer.memoryStorage()
 });
 
-/* Python API URL */
+
+/* =========================
+   PYTHON API
+========================= */
+
 const PYTHON_API_URL =
   'https://crops-dieasese-detection-app-5.onrender.com/predict';
 
-/* Upload Route */
+
+/* =========================
+   UPLOAD ROUTE
+========================= */
+
 app.post('/upload', upload.single('image'), async (req, res) => {
+
   try {
+
+    /* Check file */
+
     if (!req.file) {
+
       return res.status(400).json({
         error: 'No file uploaded'
       });
+
     }
 
-    console.log('File received:', req.file.originalname);
-    console.log('File type:', req.file.mimetype);
-    console.log('File size:', req.file.size);
+
+    console.log(
+      'File received:',
+      req.file.originalname
+    );
+
+    console.log(
+      'File type:',
+      req.file.mimetype
+    );
+
+    console.log(
+      'File size:',
+      req.file.size
+    );
+
+
+    /* =========================
+       CREATE NATIVE FORMDATA
+    ========================= */
 
     const form = new FormData();
 
-    form.append('file', req.file.buffer, {
-      filename: req.file.originalname,
-      contentType: req.file.mimetype
-    });
 
-    console.log('Sending image to Python API...');
+    /* Buffer -> Blob */
 
-    const response = await fetch(PYTHON_API_URL, {
-      method: 'POST',
-      body: form,
-      headers: form.getHeaders()
-    });
+    const blob = new Blob(
+      [req.file.buffer],
+      {
+        type: req.file.mimetype
+      }
+    );
 
-    console.log('Python status:', response.status);
+
+    /* IMPORTANT
+       Python expects "file"
+    */
+
+    form.append(
+      'file',
+      blob,
+      req.file.originalname
+    );
+
+
+    console.log(
+      'Sending image to Python API...'
+    );
+
+
+    /* =========================
+       SEND TO PYTHON
+    ========================= */
+
+    const response = await fetch(
+      PYTHON_API_URL,
+      {
+        method: 'POST',
+        body: form
+      }
+    );
+
+
+    console.log(
+      'Python status:',
+      response.status
+    );
+
+
+    /* Get response */
 
     const text = await response.text();
 
-    console.log('Python response:', text);
+
+    console.log(
+      'Python response:',
+      text
+    );
+
+
+    /* =========================
+       PYTHON ERROR
+    ========================= */
 
     if (!response.ok) {
-      return res.status(500).json({
+
+      return res.status(response.status).json({
         error: 'Python API failed',
         details: text
       });
+
     }
+
+
+    /* =========================
+       CONVERT JSON
+    ========================= */
 
     const result = JSON.parse(text);
 
-    console.log('Prediction result:', result);
 
-    res.json(result);
+    console.log(
+      'Prediction result:',
+      result
+    );
 
-  } catch (err) {
-    console.error('❌ Upload error:', err);
 
-    res.status(500).json({
+    return res.json(result);
+
+  }
+
+
+  catch (err) {
+
+    console.error(
+      '❌ Upload error:',
+      err
+    );
+
+
+    return res.status(500).json({
       error: 'Prediction failed',
       details: err.message
     });
+
   }
+
 });
 
-/* Health check */
+
+/* =========================
+   HEALTH CHECK
+========================= */
+
 app.get('/', (req, res) => {
-  res.send('🚀 Node backend running');
+
+  res.send(
+    '🚀 Node backend running'
+  );
+
 });
 
-/* Start server */
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`✅ Server running on port ${PORT}`);
-});
+
+/* =========================
+   START SERVER
+========================= */
+
+app.listen(
+  PORT,
+  '0.0.0.0',
+  () => {
+
+    console.log(
+      `✅ Server running on port ${PORT}`
+    );
+
+  }
+);
