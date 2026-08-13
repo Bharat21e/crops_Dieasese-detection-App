@@ -1,8 +1,8 @@
 const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
-const { fetch, FormData } = require('undici');
-const { Blob } = require('buffer');
+const { fetch } = require('undici');
+const FormData = require('form-data');
 
 const app = express();
 const PORT = process.env.PORT || 2000;
@@ -37,37 +37,33 @@ app.post('/upload', upload.single('image'), async (req, res) => {
 
     const form = new FormData();
 
-    const blob = new Blob([req.file.buffer], {
-      type: req.file.mimetype
+    form.append('file', req.file.buffer, {
+      filename: req.file.originalname,
+      contentType: req.file.mimetype
     });
-
-    form.append(
-      'file',
-      blob,
-      req.file.originalname
-    );
 
     console.log('Sending image to Python API...');
 
     const response = await fetch(PYTHON_API_URL, {
       method: 'POST',
-      body: form
+      body: form,
+      headers: form.getHeaders()
     });
 
     console.log('Python status:', response.status);
 
+    const text = await response.text();
+
+    console.log('Python response:', text);
+
     if (!response.ok) {
-      const text = await response.text();
-
-      console.error('Python API Error:', text);
-
       return res.status(500).json({
         error: 'Python API failed',
         details: text
       });
     }
 
-    const result = await response.json();
+    const result = JSON.parse(text);
 
     console.log('Prediction result:', result);
 
