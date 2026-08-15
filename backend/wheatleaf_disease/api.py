@@ -8,9 +8,25 @@ import os
 app = FastAPI()
 
 
-@app.api_route("/", methods=["GET", "HEAD"])
+# =========================
+# HOME / HEALTH CHECK
+# =========================
+
+@app.get("/")
 def root():
-    return {"status": "Crop Disease Detection API is running"}
+    return {
+        "status": "Crop Disease Detection API is running"
+    }
+
+
+@app.head("/")
+def root_head():
+    return
+
+
+# =========================
+# CLASS NAMES
+# =========================
 
 class_names = [
     "Apple___Apple_scab",
@@ -71,212 +87,367 @@ class_names = [
 ]
 
 
-sease_data = {
+# =========================
+# DISEASE INFORMATION
+# =========================
 
-    # 🍎 Apple
+disease_data = {
+
+    # Apple
     "Apple___Apple_scab": {
         "cause": "Fungal infection caused by Venturia inaequalis.",
-        "cure": "Remove infected leaves and apply fungicide spray."
+        "cure": "Remove infected leaves and apply recommended fungicide."
     },
+
     "Apple___Black_rot": {
         "cause": "Fungal disease caused by Botryosphaeria obtusa.",
         "cure": "Prune infected branches and use recommended fungicides."
     },
+
     "Apple___Cedar_apple_rust": {
-        "cause": "Fungal disease spread from cedar trees.",
-        "cure": "Remove nearby cedar trees and apply fungicide."
-    },
-    "Apple___healthy": {
-        "cause": "No disease present.",
-        "cure": "Maintain proper irrigation and nutrition."
+        "cause": "Fungal disease associated with cedar trees.",
+        "cure": "Remove infected plant material and apply appropriate fungicide."
     },
 
-    # 🍒 Cherry
-    "Cherry___Powdery_mildew": {
-        "cause": "Fungal infection due to humid conditions.",
-        "cure": "Improve air circulation and apply sulfur fungicide."
+    "Apple___healthy": {
+        "cause": "No disease detected.",
+        "cure": "Maintain proper irrigation, nutrition and crop care."
     },
+
+
+    # Blueberry
+    "Blueberry___healthy": {
+        "cause": "No disease detected.",
+        "cure": "Continue normal crop management."
+    },
+
+
+    # Cherry
+    "Cherry___Powdery_mildew": {
+        "cause": "Fungal infection favored by humid conditions.",
+        "cure": "Improve air circulation and use an appropriate fungicide."
+    },
+
     "Cherry___healthy": {
-        "cause": "No disease present.",
+        "cause": "No disease detected.",
         "cure": "Continue standard crop management."
     },
 
-    # 🌽 Corn
+
+    # Corn
     "Corn___Cercospora_leaf_spot Gray_leaf_spot": {
-        "cause": "Fungal infection due to Cercospora species.",
-        "cure": "Use resistant hybrids and crop rotation."
+        "cause": "Fungal infection caused by Cercospora species.",
+        "cure": "Use resistant hybrids, crop rotation and appropriate fungicide."
     },
+
     "Corn___Common_rust": {
-        "cause": "Rust fungus infection favored by moist weather.",
-        "cure": "Apply fungicide and use resistant varieties."
+        "cause": "Rust fungal infection favored by moist weather.",
+        "cure": "Use resistant varieties and apply fungicide when required."
     },
+
     "Corn___Northern_Leaf_Blight": {
         "cause": "Fungal disease caused by Exserohilum turcicum.",
-        "cure": "Crop rotation and fungicide spray."
+        "cure": "Use crop rotation, resistant varieties and fungicide."
     },
+
     "Corn___healthy": {
         "cause": "No disease detected.",
-        "cure": "Maintain balanced fertilization."
+        "cure": "Maintain balanced fertilization and proper irrigation."
     },
 
-    # 🍇 Grape
+
+    # Grape
     "Grape___Black_rot": {
         "cause": "Fungal infection affecting leaves and fruit.",
-        "cure": "Remove infected plant parts and apply fungicide."
+        "cure": "Remove infected plant parts and apply appropriate fungicide."
     },
+
     "Grape___Esca_(Black_Measles)": {
-        "cause": "Fungal trunk disease.",
-        "cure": "Prune affected vines and avoid injuries."
+        "cause": "Fungal disease affecting grape vines.",
+        "cure": "Prune affected vines and avoid unnecessary plant injuries."
     },
+
     "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": {
         "cause": "Fungal leaf spot disease.",
-        "cure": "Use protective fungicides."
+        "cure": "Remove affected leaves and use protective fungicide."
     },
+
     "Grape___healthy": {
-        "cause": "Healthy plant.",
-        "cure": "Continue good vineyard practices."
+        "cause": "No disease detected.",
+        "cure": "Continue good vineyard management."
     },
 
-    # 🍊 Orange
+
+    # Orange
     "Orange___Haunglongbing_(Citrus_greening)": {
-        "cause": "Bacterial disease spread by psyllids.",
-        "cure": "Control insects and remove infected trees."
+        "cause": "Citrus greening is a bacterial disease spread by psyllids.",
+        "cure": "Control psyllids and remove severely infected trees."
     },
 
-    # 🍑 Peach
+
+    # Peach
     "Peach___Bacterial_spot": {
         "cause": "Bacterial infection affecting leaves and fruits.",
-        "cure": "Use resistant varieties and copper sprays."
-    },
-    "Peach___healthy": {
-        "cause": "No disease present.",
-        "cure": "Maintain orchard hygiene."
+        "cure": "Use resistant varieties and appropriate copper-based treatment."
     },
 
-    # 🌶 Pepper
-    "Pepper,_bell___Bacterial_spot": {
-        "cause": "Bacterial infection in warm, wet conditions.",
-        "cure": "Use disease-free seeds and copper fungicide."
+    "Peach___healthy": {
+        "cause": "No disease detected.",
+        "cure": "Maintain good orchard hygiene and crop care."
     },
+
+
+    # Pepper
+    "Pepper,_bell___Bacterial_spot": {
+        "cause": "Bacterial infection favored by warm and wet conditions.",
+        "cure": "Use disease-free seeds and appropriate crop protection."
+    },
+
     "Pepper,_bell___healthy": {
-        "cause": "Healthy crop.",
+        "cause": "No disease detected.",
         "cure": "Continue proper crop care."
     },
 
-    # 🥔 Potato
+
+    # Potato
     "Potato___Early_blight": {
-        "cause": "Fungal disease caused by Alternaria.",
-        "cure": "Crop rotation and fungicide application."
-    },
-    "Potato___Late_blight": {
-        "cause": "Fungal disease caused by Phytophthora infestans.",
-        "cure": "Immediate fungicide spray required."
-    },
-    "Potato___healthy": {
-        "cause": "No disease detected.",
-        "cure": "Maintain soil fertility."
+        "cause": "Fungal disease caused by Alternaria species.",
+        "cure": "Use crop rotation and appropriate fungicide."
     },
 
-    # 🍓 Strawberry
+    "Potato___Late_blight": {
+        "cause": "Disease caused by Phytophthora infestans.",
+        "cure": "Remove severely infected material and apply appropriate fungicide."
+    },
+
+    "Potato___healthy": {
+        "cause": "No disease detected.",
+        "cure": "Maintain proper soil fertility and irrigation."
+    },
+
+
+    # Raspberry
+    "Raspberry___healthy": {
+        "cause": "No disease detected.",
+        "cure": "Continue normal crop management."
+    },
+
+
+    # Soybean
+    "Soybean___healthy": {
+        "cause": "No disease detected.",
+        "cure": "Continue normal crop management."
+    },
+
+
+    # Squash
+    "Squash___Powdery_mildew": {
+        "cause": "Fungal infection causing white powdery growth.",
+        "cure": "Improve air circulation and use appropriate fungicide."
+    },
+
+
+    # Strawberry
     "Strawberry___Leaf_scorch": {
         "cause": "Fungal infection causing leaf damage.",
         "cure": "Remove infected leaves and improve drainage."
     },
+
     "Strawberry___healthy": {
-        "cause": "Healthy plant.",
-        "cure": "Follow regular crop practices."
+        "cause": "No disease detected.",
+        "cure": "Continue regular crop management."
     },
 
-    # 🍅 Tomato
+
+    # Tomato
     "Tomato___Bacterial_spot": {
-        "cause": "Bacterial infection due to wet conditions.",
-        "cure": "Use resistant varieties and copper spray."
+        "cause": "Bacterial infection favored by wet conditions.",
+        "cure": "Use resistant varieties and appropriate crop protection."
     },
+
     "Tomato___Early_blight": {
-        "cause": "Fungal infection due to Alternaria.",
-        "cure": "Crop rotation and fungicide spray."
+        "cause": "Fungal infection caused by Alternaria species.",
+        "cure": "Use crop rotation and appropriate fungicide."
     },
+
     "Tomato___Late_blight": {
-        "cause": "Severe fungal disease.",
-        "cure": "Destroy infected plants and apply fungicide."
+        "cause": "Serious disease caused by Phytophthora infestans.",
+        "cure": "Remove severely infected plants and use appropriate fungicide."
     },
+
     "Tomato___Leaf_Mold": {
-        "cause": "Fungal infection in high humidity.",
-        "cure": "Reduce humidity and apply fungicide."
+        "cause": "Fungal infection favored by high humidity.",
+        "cure": "Reduce humidity and improve air circulation."
     },
+
     "Tomato___Septoria_leaf_spot": {
         "cause": "Fungal leaf spot disease.",
-        "cure": "Remove infected leaves and spray fungicide."
+        "cure": "Remove infected leaves and use appropriate fungicide."
     },
+
     "Tomato___Spider_mites Two-spotted_spider_mite": {
-        "cause": "Mite infestation.",
-        "cure": "Use neem oil or approved insecticides."
+        "cause": "Spider mite infestation.",
+        "cure": "Use appropriate mite control methods."
     },
+
     "Tomato___Target_Spot": {
-        "cause": "Fungal disease.",
-        "cure": "Use resistant varieties and fungicide."
+        "cause": "Fungal disease affecting tomato leaves.",
+        "cure": "Use resistant varieties and appropriate fungicide."
     },
+
     "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
-        "cause": "Virus spread by whiteflies.",
-        "cure": "Control whiteflies and remove infected plants."
+        "cause": "Viral disease commonly spread by whiteflies.",
+        "cure": "Control whiteflies and remove severely infected plants."
     },
+
     "Tomato___Tomato_mosaic_virus": {
         "cause": "Viral infection.",
         "cure": "Remove infected plants and disinfect tools."
     },
+
     "Tomato___healthy": {
-        "cause": "Healthy crop.",
-        "cure": "Continue standard practices."
+        "cause": "No disease detected.",
+        "cure": "Continue standard crop management."
     },
 
-    # 🌾 Wheat
+
+    # Wheat
     "wheat_Healthy": {
         "cause": "Healthy wheat crop.",
         "cure": "No treatment required."
     },
+
     "wheat_septoria": {
         "cause": "Fungal leaf disease caused by Septoria.",
-        "cure": "Apply fungicide and crop rotation."
+        "cure": "Use crop rotation and appropriate fungicide."
     },
+
     "wheat_stripe_rust": {
         "cause": "Fungal rust disease.",
-        "cure": "Early sowing and fungicide application."
+        "cure": "Use resistant varieties and apply appropriate fungicide when required."
     }
 }
 
 
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "crop_leaf_model.h5")
+# =========================
+# LOAD MODEL
+# =========================
+
+MODEL_PATH = os.path.join(
+    os.path.dirname(__file__),
+    "crop_leaf_model.h5"
+)
+
 model = tf.keras.models.load_model(MODEL_PATH)
+
+print("Model loaded successfully")
+print("Number of classes:", len(class_names))
+
+
+# =========================
+# PREDICTION
+# =========================
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
-    try:
-        image_bytes = await file.read()
-        image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-        image = image.resize((150, 150))
-        image_array = np.array(image) / 255.0
-        image_array = np.expand_dims(image_array, axis=0)
 
-        predictions = model.predict(image_array)[0]
+    try:
+
+        # Read image
+        image_bytes = await file.read()
+
+        image = Image.open(
+            io.BytesIO(image_bytes)
+        ).convert("RGB")
+
+        # Resize
+        image = image.resize((150, 150))
+
+        # Convert to numpy
+        image_array = np.array(image, dtype=np.float32)
+
+        # Normalize
+        image_array = image_array / 255.0
+
+        # Add batch dimension
+        image_array = np.expand_dims(
+            image_array,
+            axis=0
+        )
+
+        # Model prediction
+        predictions = model.predict(
+            image_array,
+            verbose=0
+        )[0]
+
+        # Find highest probability
         index = int(np.argmax(predictions))
+
+        # Safety check
+        if index >= len(class_names):
+            return {
+                "error": "Model output classes do not match class_names."
+            }
+
+        # Predicted label
         label = class_names[index]
 
-        healthy = round(float(predictions[index]) * 100, 2)
-        affected = round(100 - healthy, 2)
+        # Confidence
+        confidence = float(predictions[index]) * 100
 
-        info = sease_data.get(label, {
-            "cause": "Disease information not available.",
-            "cure": "Check nearby agriculture doctor."
-        })
-        
-        
+        confidence = round(
+            confidence,
+            2
+        )
 
+        # Get disease information
+        info = disease_data.get(label)
+
+        # If information exists
+        if info:
+
+            cause = info["cause"]
+            cure = info["cure"]
+
+        else:
+
+            cause = "Disease information not available."
+            cure = "Please consult an agriculture expert."
+
+        # Check healthy class
+        is_healthy = (
+            "healthy" in label.lower()
+        )
+
+        if is_healthy:
+
+            healthy_percentage = confidence
+            affected_percentage = round(
+                100 - confidence,
+                2
+            )
+
+        else:
+
+            affected_percentage = confidence
+            healthy_percentage = round(
+                100 - confidence,
+                2
+            )
+
+        # Final response
         return {
             "prediction": label,
-            "healthy": healthy,
-            "affected": affected,
-            "cause": info["cause"],
-            "cure": info["cure"]
+            "confidence": confidence,
+            "healthy": healthy_percentage,
+            "affected": affected_percentage,
+            "cause": cause,
+            "cure": cure
         }
+
     except Exception as e:
-        return {"error": str(e)}
+
+        return {
+            "error": str(e)
+        }
