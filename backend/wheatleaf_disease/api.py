@@ -8,7 +8,7 @@ import os
 app = FastAPI()
 
 
-@app.get("/")
+@app.api_route("/", methods=["GET", "HEAD"])
 def root():
     return {"status": "Crop Disease Detection API is running"}
 
