@@ -8,9 +8,9 @@ import os
 app = FastAPI()
 
 
-# =========================
+# =========================================================
 # HOME / HEALTH CHECK
-# =========================
+# =========================================================
 
 @app.get("/")
 def root():
@@ -24,76 +24,67 @@ def root_head():
     return
 
 
-# =========================
+# =========================================================
 # CLASS NAMES
-# =========================
+# IMPORTANT:
+# This order MUST match your training class_indices
+# =========================================================
 
 class_names = [
-    "Apple___Apple_scab",
-    "Apple___Black_rot",
-    "Apple___Cedar_apple_rust",
-    "Apple___healthy",
-
-    "Blueberry___healthy",
-
-    "Cherry___Powdery_mildew",
-    "Cherry___healthy",
-
-    "Corn___Cercospora_leaf_spot Gray_leaf_spot",
-    "Corn___Common_rust",
-    "Corn___Northern_Leaf_Blight",
-    "Corn___healthy",
-
-    "Grape___Black_rot",
-    "Grape___Esca_(Black_Measles)",
-    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
-    "Grape___healthy",
-
-    "Orange___Haunglongbing_(Citrus_greening)",
-
-    "Peach___Bacterial_spot",
-    "Peach___healthy",
-
-    "Pepper,_bell___Bacterial_spot",
-    "Pepper,_bell___healthy",
-
-    "Potato___Early_blight",
-    "Potato___Late_blight",
-    "Potato___healthy",
-
-    "Raspberry___healthy",
-
-    "Soybean___healthy",
-
-    "Squash___Powdery_mildew",
-
-    "Strawberry___Leaf_scorch",
-    "Strawberry___healthy",
-
-    "Tomato___Bacterial_spot",
-    "Tomato___Early_blight",
-    "Tomato___Late_blight",
-    "Tomato___Leaf_Mold",
-    "Tomato___Septoria_leaf_spot",
-    "Tomato___Spider_mites Two-spotted_spider_mite",
-    "Tomato___Target_Spot",
-    "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
-    "Tomato___Tomato_mosaic_virus",
-    "Tomato___healthy",
-
-    "wheat_Healthy",
-    "wheat_septoria",
-    "wheat_stripe_rust"
+    "Apple___Apple_scab",                         # 0
+    "Apple___Black_rot",                          # 1
+    "Apple___Cedar_apple_rust",                   # 2
+    "Apple___healthy",                             # 3
+    "Cherry___Powdery_mildew",                    # 4
+    "Cherry___healthy",                           # 5
+    "Corn___Cercospora_leaf_spot Gray_leaf_spot", # 6
+    "Corn___Common_rust",                         # 7
+    "Corn___Northern_Leaf_Blight",                # 8
+    "Corn___healthy",                              # 9
+    "Grape___Black_rot",                           # 10
+    "Grape___Esca_(Black_Measles)",               # 11
+    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)", # 12
+    "Grape___healthy",                             # 13
+    "Healthy",                                     # 14
+    "Non_Leaf",                                    # 15
+    "Orange___Haunglongbing_(Citrus_greening)",   # 16
+    "Peach___Bacterial_spot",                     # 17
+    "Peach___healthy",                             # 18
+    "Pepper,_bell___Bacterial_spot",              # 19
+    "Pepper,_bell___healthy",                     # 20
+    "Potato___Early_blight",                      # 21
+    "Potato___Late_blight",                       # 22
+    "Potato___healthy",                            # 23
+    "Raspberry___healthy",                         # 24
+    "Soybean___healthy",                           # 25
+    "Squash___Powdery_mildew",                    # 26
+    "Strawberry___Leaf_scorch",                   # 27
+    "Strawberry___healthy",                       # 28
+    "Tomato___Bacterial_spot",                    # 29
+    "Tomato___Early_blight",                      # 30
+    "Tomato___Late_blight",                       # 31
+    "Tomato___Leaf_Mold",                         # 32
+    "Tomato___Septoria_leaf_spot",                # 33
+    "Tomato___Spider_mites Two-spotted_spider_mite", # 34
+    "Tomato___Target_Spot",                       # 35
+    "Tomato___Tomato_Yellow_Leaf_Curl_Virus",     # 36
+    "Tomato___Tomato_mosaic_virus",               # 37
+    "Tomato___healthy",                            # 38
+    "septoria",                                    # 39
+    "stripe_rust"                                  # 40
 ]
 
 
-# =========================
+# =========================================================
 # DISEASE INFORMATION
-# =========================
+# =========================================================
 
 disease_data = {
 
+    # -------------------------
     # Apple
+    # -------------------------
+
     "Apple___Apple_scab": {
         "cause": "Fungal infection caused by Venturia inaequalis.",
         "cure": "Remove infected leaves and apply recommended fungicide."
@@ -115,14 +106,10 @@ disease_data = {
     },
 
 
-    # Blueberry
-    "Blueberry___healthy": {
-        "cause": "No disease detected.",
-        "cure": "Continue normal crop management."
-    },
-
-
+    # -------------------------
     # Cherry
+    # -------------------------
+
     "Cherry___Powdery_mildew": {
         "cause": "Fungal infection favored by humid conditions.",
         "cure": "Improve air circulation and use an appropriate fungicide."
@@ -134,7 +121,10 @@ disease_data = {
     },
 
 
+    # -------------------------
     # Corn
+    # -------------------------
+
     "Corn___Cercospora_leaf_spot Gray_leaf_spot": {
         "cause": "Fungal infection caused by Cercospora species.",
         "cure": "Use resistant hybrids, crop rotation and appropriate fungicide."
@@ -156,7 +146,10 @@ disease_data = {
     },
 
 
+    # -------------------------
     # Grape
+    # -------------------------
+
     "Grape___Black_rot": {
         "cause": "Fungal infection affecting leaves and fruit.",
         "cure": "Remove infected plant parts and apply appropriate fungicide."
@@ -178,14 +171,20 @@ disease_data = {
     },
 
 
+    # -------------------------
     # Orange
+    # -------------------------
+
     "Orange___Haunglongbing_(Citrus_greening)": {
         "cause": "Citrus greening is a bacterial disease spread by psyllids.",
         "cure": "Control psyllids and remove severely infected trees."
     },
 
 
+    # -------------------------
     # Peach
+    # -------------------------
+
     "Peach___Bacterial_spot": {
         "cause": "Bacterial infection affecting leaves and fruits.",
         "cure": "Use resistant varieties and appropriate copper-based treatment."
@@ -197,7 +196,10 @@ disease_data = {
     },
 
 
+    # -------------------------
     # Pepper
+    # -------------------------
+
     "Pepper,_bell___Bacterial_spot": {
         "cause": "Bacterial infection favored by warm and wet conditions.",
         "cure": "Use disease-free seeds and appropriate crop protection."
@@ -209,7 +211,10 @@ disease_data = {
     },
 
 
+    # -------------------------
     # Potato
+    # -------------------------
+
     "Potato___Early_blight": {
         "cause": "Fungal disease caused by Alternaria species.",
         "cure": "Use crop rotation and appropriate fungicide."
@@ -226,28 +231,40 @@ disease_data = {
     },
 
 
+    # -------------------------
     # Raspberry
+    # -------------------------
+
     "Raspberry___healthy": {
         "cause": "No disease detected.",
         "cure": "Continue normal crop management."
     },
 
 
+    # -------------------------
     # Soybean
+    # -------------------------
+
     "Soybean___healthy": {
         "cause": "No disease detected.",
         "cure": "Continue normal crop management."
     },
 
 
+    # -------------------------
     # Squash
+    # -------------------------
+
     "Squash___Powdery_mildew": {
         "cause": "Fungal infection causing white powdery growth.",
         "cure": "Improve air circulation and use appropriate fungicide."
     },
 
 
+    # -------------------------
     # Strawberry
+    # -------------------------
+
     "Strawberry___Leaf_scorch": {
         "cause": "Fungal infection causing leaf damage.",
         "cure": "Remove infected leaves and improve drainage."
@@ -259,7 +276,10 @@ disease_data = {
     },
 
 
+    # -------------------------
     # Tomato
+    # -------------------------
+
     "Tomato___Bacterial_spot": {
         "cause": "Bacterial infection favored by wet conditions.",
         "cure": "Use resistant varieties and appropriate crop protection."
@@ -311,100 +331,181 @@ disease_data = {
     },
 
 
-    # Wheat
-    "wheat_Healthy": {
-        "cause": "Healthy wheat crop.",
-        "cure": "No treatment required."
+    # -------------------------
+    # Other / Wheat Classes
+    # -------------------------
+
+    "Healthy": {
+        "cause": "No disease detected.",
+        "cure": "Continue proper crop care."
     },
 
-    "wheat_septoria": {
+    "Non_Leaf": {
+        "cause": "The uploaded image does not appear to contain a recognizable crop leaf.",
+        "cure": "Please upload a clear image of a crop leaf."
+    },
+
+    "septoria": {
         "cause": "Fungal leaf disease caused by Septoria.",
-        "cure": "Use crop rotation and appropriate fungicide."
+        "cure": "Remove infected leaves, maintain good field hygiene and use an appropriate fungicide when required."
     },
 
-    "wheat_stripe_rust": {
-        "cause": "Fungal rust disease.",
-        "cure": "Use resistant varieties and apply appropriate fungicide when required."
+    "stripe_rust": {
+        "cause": "Fungal rust disease affecting the leaf.",
+        "cure": "Use resistant varieties and apply an appropriate fungicide when required."
     }
 }
 
 
-# =========================
+# =========================================================
 # LOAD MODEL
-# =========================
+# =========================================================
 
 MODEL_PATH = os.path.join(
     os.path.dirname(__file__),
     "crop_leaf_model.h5"
 )
 
+print("Loading model...")
+
 model = tf.keras.models.load_model(MODEL_PATH)
 
 print("Model loaded successfully")
+print("Model output shape:", model.output_shape)
 print("Number of classes:", len(class_names))
 
 
-# =========================
+# =========================================================
+# MODEL / CLASS SAFETY CHECK
+# =========================================================
+
+try:
+    model_class_count = model.output_shape[-1]
+
+    if model_class_count != len(class_names):
+        raise ValueError(
+            f"Model has {model_class_count} output classes, "
+            f"but class_names contains {len(class_names)} classes."
+        )
+
+    print("Class count check: OK")
+
+except Exception as e:
+    print("Class count check failed:", str(e))
+
+
+# =========================================================
 # PREDICTION
-# =========================
+# =========================================================
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
 
     try:
 
-        # Read image
+        # -------------------------
+        # Read uploaded image
+        # -------------------------
+
         image_bytes = await file.read()
+
+        if not image_bytes:
+            return {
+                "error": "Uploaded file is empty."
+            }
+
+        # -------------------------
+        # Open image
+        # -------------------------
 
         image = Image.open(
             io.BytesIO(image_bytes)
         ).convert("RGB")
 
+        # -------------------------
         # Resize
+        # -------------------------
+
         image = image.resize((150, 150))
 
-        # Convert to numpy
-        image_array = np.array(image, dtype=np.float32)
+        # -------------------------
+        # Convert to NumPy
+        # -------------------------
 
+        image_array = np.array(
+            image,
+            dtype=np.float32
+        )
+
+        # -------------------------
         # Normalize
+        # -------------------------
+
         image_array = image_array / 255.0
 
+        # -------------------------
         # Add batch dimension
+        # -------------------------
+
         image_array = np.expand_dims(
             image_array,
             axis=0
         )
 
-        # Model prediction
+        # -------------------------
+        # Prediction
+        # -------------------------
+
         predictions = model.predict(
             image_array,
             verbose=0
         )[0]
 
-        # Find highest probability
-        index = int(np.argmax(predictions))
+        # -------------------------
+        # Check model output
+        # -------------------------
 
-        # Safety check
-        if index >= len(class_names):
+        if len(predictions) != len(class_names):
             return {
-                "error": "Model output classes do not match class_names."
+                "error": (
+                    f"Model returned {len(predictions)} classes, "
+                    f"but API has {len(class_names)} class names."
+                )
             }
 
+        # -------------------------
+        # Highest probability
+        # -------------------------
+
+        index = int(
+            np.argmax(predictions)
+        )
+
+        # -------------------------
         # Predicted label
+        # -------------------------
+
         label = class_names[index]
 
+        # -------------------------
         # Confidence
-        confidence = float(predictions[index]) * 100
+        # -------------------------
+
+        confidence = float(
+            predictions[index]
+        ) * 100
 
         confidence = round(
             confidence,
             2
         )
 
-        # Get disease information
+        # -------------------------
+        # Disease information
+        # -------------------------
+
         info = disease_data.get(label)
 
-        # If information exists
         if info:
 
             cause = info["cause"]
@@ -415,14 +516,19 @@ async def predict(file: UploadFile = File(...)):
             cause = "Disease information not available."
             cure = "Please consult an agriculture expert."
 
-        # Check healthy class
+        # -------------------------
+        # Healthy / affected
+        # -------------------------
+
         is_healthy = (
-            "healthy" in label.lower()
+            label.lower() == "healthy"
+            or "healthy" in label.lower()
         )
 
         if is_healthy:
 
             healthy_percentage = confidence
+
             affected_percentage = round(
                 100 - confidence,
                 2
@@ -431,12 +537,16 @@ async def predict(file: UploadFile = File(...)):
         else:
 
             affected_percentage = confidence
+
             healthy_percentage = round(
                 100 - confidence,
                 2
             )
 
+        # -------------------------
         # Final response
+        # -------------------------
+
         return {
             "prediction": label,
             "confidence": confidence,
