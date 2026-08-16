@@ -1,3 +1,6 @@
+
+
+
 from fastapi import FastAPI, UploadFile, File
 from PIL import Image
 import numpy as np
@@ -395,6 +398,43 @@ except Exception as e:
 
 
 # =========================================================
+# IMAGE QUALITY CHECK
+# =========================================================
+
+def check_image_quality(image):
+    """
+    Basic check for very small, too dark, too bright,
+    or very low-contrast/blurry images.
+    """
+    width, height = image.size
+
+    if width < 100 or height < 100:
+        return False
+
+    gray = image.convert("L")
+    pixels = np.array(gray, dtype=np.float32)
+
+    brightness = np.mean(pixels)
+    contrast = np.std(pixels)
+
+    # Reject extremely dark, extremely bright,
+    # or very low-contrast images.
+    if brightness < 30 or brightness > 245:
+        return False
+
+    if contrast < 15:
+        return False
+
+    return True
+
+
+UPLOAD_MESSAGE = (
+    "Please upload a clear crop leaf image with good lighting "
+    "and keep the leaf fully visible."
+)
+
+
+# =========================================================
 # PREDICTION
 # =========================================================
 
@@ -421,6 +461,21 @@ async def predict(file: UploadFile = File(...)):
         image = Image.open(
             io.BytesIO(image_bytes)
         ).convert("RGB")
+
+        # -------------------------
+        # Check image quality
+        # -------------------------
+
+        if not check_image_quality(image):
+            return {
+                "prediction": "Non_Leaf",
+                "confidence": 0,
+                "healthy": 0,
+                "affected": 0,
+                "cause": "The uploaded image is unclear or does not contain a recognizable crop leaf.",
+                "cure": "Please upload a clear image of a crop leaf.",
+                "message": UPLOAD_MESSAGE
+            }
 
         # -------------------------
         # Resize
@@ -499,6 +554,22 @@ async def predict(file: UploadFile = File(...)):
             confidence,
             2
         )
+
+        # -------------------------
+        # NON-LEAF CHECK
+        # -------------------------
+
+        if label == "Non_Leaf":
+            return {
+                "prediction": "Non_Leaf",
+                "confidence": confidence,
+                "healthy": 0,
+                "affected": 0,
+                "cause": "The uploaded image does not appear to contain a recognizable crop leaf.",
+                "cure": "Please upload a clear image of a crop leaf.",
+                "message": UPLOAD_MESSAGE
+                
+            }
 
         # -------------------------
         # Disease information
