@@ -11,7 +11,7 @@
 # production
 /build
 
-wheatleaf_disease/dataset/
+wheatleaf_disease/dataset
 
 # misc
 .DS_Store
